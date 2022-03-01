@@ -6,7 +6,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
   end
 
   allow do
-    origin "https://resapea.herokuapp.com"
+    origins "https://resapea.herokuapp.com"
     resource "*", headers: :any, methods: [:get, :post, :put, :patch, :delete, :options, :head],
     credentials: true
   end
