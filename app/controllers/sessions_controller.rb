@@ -1,5 +1,4 @@
 class SessionsController < ApplicationController
-  include CurrentUserConcern
 
   def create
     user = User
@@ -13,7 +12,7 @@ class SessionsController < ApplicationController
         logged_in: true,
         user: user
       }
-    else 
+    else
       render json: { status: 401 }
     end
   end

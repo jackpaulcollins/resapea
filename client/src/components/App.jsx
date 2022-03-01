@@ -1,82 +1,68 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route } from "react-router-dom";
 import Login from './auth/Login'
-import axios from "axios";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Registration from './auth/Registration';
+import SubmitForgotPassword from './auth/SubmitForgotPassword'
+import Home from '../components/Home'
 import { API_ROOT } from '../apiRoot'
 
-export default class App extends Component {
-  constructor() {
-    super();
 
-    this.state = {
-      isLoggedIn: false,
-      user: {}
-    }
+const App = () => {
 
-    this.handleLogin = this.handleLogin.bind(this)
-    this.handleLogout = this.handleLogout.bind(this)
+  useEffect(() => {
+    isLoggedIn()
+  },[]);
+
+  const [ loggedIn, setLoggedIn ] = useState('NOT_LOGGED_IN');
+  const [ user, setUser ] = useState({});
+
+  async function isLoggedIn() {
+    fetch(`${API_ROOT}/api/logged_in`)
+    .then(response => response.json())
+    .then(data => {
+      if (data.logged_in && loggedIn === "NOT_LOGGED_IN") {
+        setLoggedIn("LOGGED_IN")
+        setUser(data.user)
+      } else if (!data.logged_in && loggedIn === "LOGGED_IN") {
+        setLoggedIn("NOT_LOGGED_IN")
+        setUser({})
+      }
+    });
   }
 
-  checkLoginStatus() {
-    axios
-      .get(`${API_ROOT}/api/logged_in`, { withCredentials: true })
-      .then(response => {
-        if (
-          response.data.logged_in &&
-          this.state.isLoggedIn === false
-        ) {
-          this.setState({
-            isLoggedIn: true,
-            user: response.data.user
-          });
-        } else if (
-          !response.data.logged_in &
-          (this.state.isLoggedIn === true)
-        ) {
-          this.setState({
-            isLoggedIn: false,
-            user: {}
-          });
-        }
-      })
-      .catch(error => {
-        console.log("check login error", error);
-      });
+  const handleLogin = (data) => {
+    setLoggedIn("LOGGED_IN")
+    setUser(data.user)
   }
 
-  handleSuccessfulAuth(data) {
-    this.handleLogin(data);
-  }
+  console.log(loggedIn, user)
 
-  componentDidMount() {
-    this.checkLoginStatus();
-  }
-
-  handleLogin(data) {
-    this.setState({
-      isLoggedIn: true,
-      user: data.data.user
-    })
-
-  }
-
-  handleLogout() {
-    axios.delete(`${API_ROOT}/api/logout`, {withCredentials: true}).then(
-      this.setState({
-        isLoggedIn: false,
-        user: {}
-      })
-    )
-  }
-
-  render() {
-    return(
-      <div>
-        <Login />
-        <Registration />
-      </div>
-    );
-  }
+  return(
+    <div>
+      <Routes>
+      <Route path={"/"} element={<Home />} />
+        <Route path={"/login"} 
+               element={
+                <Login
+                loggedIn={loggedIn} 
+                handleLogin={handleLogin}  
+                />} 
+        />
+        <Route path={"/register"}
+               element={
+                <Registration 
+                loggedIn={loggedIn} 
+                handleLogin={handleLogin} 
+                />} 
+        />
+        <Route path={"/forgot_password"}
+               element={
+                <SubmitForgotPassword />
+              } 
+        />
+      </Routes>
+    </div>
+  );
 }
+
+export default App;

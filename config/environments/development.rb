@@ -1,4 +1,16 @@
 Rails.application.configure do
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+  address: "mail.smtp2go.com",
+  port: 2525, # 8025, 587 and 25 can also be used.
+  domain: "resapea.io",
+  authentication: "plain",
+  enable_starttls_auto: true,
+  user_name: Rails.application.credentials.smtp2go[:user_name],
+  password: Rails.application.credentials.smtp2go[:password]
+  }
+  
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
