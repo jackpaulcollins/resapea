@@ -12,6 +12,7 @@ class PasswordsController < ApplicationController
       render json: {status: 200 }
     else
       render json: {error: ['Email address not found. Please check and try again.']}, status: :not_found
+    end
   end
 
   def reset
