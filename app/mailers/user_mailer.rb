@@ -5,7 +5,7 @@ class UserMailer < ActionMailer::Base
   def welcome_email(user)
     @user = user
     params = {
-      api_key => ENV['SMTP_PW'],
+      api_key => ENV['SMTP_KEY'],
       to => [@user],
       sender => "jack@resapea.io",
       subject => "Hello Beautifu",
