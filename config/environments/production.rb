@@ -7,8 +7,8 @@ Rails.application.configure do
   domain: "resapea.io",
   authentication: "plain",
   enable_starttls_auto: true,
-  user_name: Rails.application.credentials.smtp2go[:user_name],
-  password: Rails.application.credentials.smtp2go[:password]
+  user_name: ENV['SMTP_UN'],
+  password: ENV['SMTP_PW']
   }
   # Settings specified here will take precedence over those in config/application.rb.
 
