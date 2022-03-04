@@ -1,5 +1,6 @@
 class PasswordsController < ApplicationController
   def forgot
+    debugger
     if params[:email].blank?
       render json: { message: "Email must be given"}
     end
@@ -7,7 +8,7 @@ class PasswordsController < ApplicationController
     @user = User.find_by(email: params[:email]) 
 
     if @user.present?
-      user.generate_password_token!
+      @user.generate_password_token!
       UserMailer.reset_password(@user).deliver_now
       render json: {status: 200 }
     else
