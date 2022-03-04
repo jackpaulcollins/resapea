@@ -5,7 +5,7 @@ Rails.application.configure do
   :address => "smtp.mailgun.org",
   :port => 587,
   :domain => "mail.resapea.io",
-  user_name: Rails.application.credentials.mailgun[:user_name],
+  user_name: Rails.application.credentials.mailgun[:username],
   password: Rails.application.credentials.mailgun[:password]
 }
   
