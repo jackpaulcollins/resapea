@@ -6,6 +6,7 @@ ruby '2.6.3'
 gem 'bcrypt', '~> 3.1', '>= 3.1.16'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'faraday'
+gem 'mailgun-ruby', '~> 1.2', '>= 1.2.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.6'
