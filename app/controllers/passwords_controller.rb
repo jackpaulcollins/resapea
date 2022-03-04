@@ -18,7 +18,7 @@ class PasswordsController < ApplicationController
   def reset
     token = params[:token].to_s
 
-    if params[:email].blank?
+    if params[:token].blank?
       return render json: {error: 'Token not present'}
     end
 

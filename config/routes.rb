@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     delete :logout, to: "sessions#logout"
     get :logged_in, to: "sessions#logged_in"
     post :forgot_password, to: "passwords#forgot"
-    post :reset_password, to: 'password#reset'
+    post :reset_password, to: 'passwords#reset'
   end
 
   get '*path', to: "application#fallback_index_html", constraints: ->(request) do
