@@ -1,6 +1,5 @@
 class PasswordsController < ApplicationController
   def forgot
-    debugger
     if params[:email].blank?
       render json: { message: "Email must be given"}
     end
