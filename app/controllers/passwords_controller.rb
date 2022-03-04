@@ -4,11 +4,11 @@ class PasswordsController < ApplicationController
       render json: { message: "Email must be given"}
     end
 
-    user = User.find_by(email: params[:email]) 
+    @user = User.find_by(email: params[:email]) 
 
-    if user.present?
-      user.generate_password_token! #generate pass token
-      # SEND EMAIL HERE
+    if @user.present?
+      user.generate_password_token!
+      UserMailer.reset_password(@user).deliver_now
       render json: {status: 200 }
     else
       render json: {error: ['Email address not found. Please check and try again.']}, status: :not_found
