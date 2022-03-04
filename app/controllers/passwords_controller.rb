@@ -9,7 +9,7 @@ class PasswordsController < ApplicationController
     if @user.present?
       @user.generate_password_token!
       UserMailer.reset_password(@user).deliver_now
-      render json: {status: 200 }
+      render json: {message: "Password Reset Email Sent!" } status: 200
     else
       render json: {error: ['Email address not found. Please check and try again.']}, status: :not_found
     end
