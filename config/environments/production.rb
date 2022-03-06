@@ -7,7 +7,9 @@ Rails.application.configure do
   :domain => "mail.resapea.io",
   user_name: ENV['MG_UN'],
   password: ENV['MG_PW']
-}
+  }
+
+  config.action_dispatch.cookies_same_site_protection = :None
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
