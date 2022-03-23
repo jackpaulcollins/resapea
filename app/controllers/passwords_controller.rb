@@ -38,6 +38,7 @@ class PasswordsController < ApplicationController
     user = User.find_by(reset_password_token: token)
 
     if user.present? && user.password_token_valid?
+      # TODO don't let users use an old password
       if user.reset_password!(params[:password])
         render json: {
                         status: 200,
