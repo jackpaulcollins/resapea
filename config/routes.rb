@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     resources :recipes
     resources :ingredients
     resources :recipe_ingredients
+    delete :destroy_instruction, to: "recipes#destroy_instruction"
+    delete :destroy_ingredient, to: "recipes#destroy_ingredient"
     delete :logout, to: "sessions#logout"
     get :logged_in, to: "sessions#logged_in"
     post :forgot_password, to: "passwords#forgot"
