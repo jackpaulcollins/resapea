@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   scope '/api' do
     resources :sessions, only: [:create]
     resources :registrations, only: [:create]
+    resources :comments, only: [:create, :show, :update, :destroy]
     resources :recipes
     resources :ingredients
     resources :recipe_ingredients

@@ -4,4 +4,5 @@ class RecipeBlueprint < Blueprinter::Base
   fields :name, :genre, :user_id
   association :recipe_ingredients, blueprint: RecipeIngredientBlueprint
   association :instructions, blueprint: InstructionBlueprint
+  association :comments, blueprint: CommentBlueprint
 end
