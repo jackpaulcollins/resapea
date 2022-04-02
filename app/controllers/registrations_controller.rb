@@ -1,6 +1,5 @@
 class RegistrationsController < ApplicationController
   def create
-    debugger
     @user = User.new(registration_params)
 
     if @user.save
