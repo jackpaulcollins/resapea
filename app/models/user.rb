@@ -7,7 +7,10 @@ class User < ApplicationRecord
   has_many :recipes
   has_many :comments
   before_save { self.email = email.downcase }
-  validates :password, length: { minimum: 6 }
+  validates :password, confirmation: true,
+                     length: {:within => 6..40},
+                     unless: Proc.new { |a| !a.new_record? && a.password.blank? }
+                     
 
   attr_accessor :remember_token
 
@@ -26,8 +29,8 @@ class User < ApplicationRecord
     update_attribute(:remember_digest, User.digest(remember_token))
   end
 
-  def forget
-    update_attribute(:remember_digest, nil)
+  def clear_remember_digest
+    self.update_attribute(:remember_digest, nil)
   end
 
   def authenticated?(remember_token)

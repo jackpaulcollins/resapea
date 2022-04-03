@@ -28,7 +28,7 @@ module CurrentUserConcern
   end
 
   def forget(user)
-    forget(@current_user)
+    user.clear_remember_digest
     cookies.delete(:user_id)
     cookies.delete(:remember_token)
   end

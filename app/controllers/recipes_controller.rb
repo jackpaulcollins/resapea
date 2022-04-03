@@ -12,6 +12,7 @@ class RecipesController < ApplicationController
   end
 
   def create
+    return unless session[:user_id].present?
     @recipe = Recipe.new(recipe_params)
     if @recipe.save
       render json: { status: 200, message: "recipe created" }
@@ -42,6 +43,7 @@ class RecipesController < ApplicationController
 
   def destroy_instruction
     @instruction = Instruction.find_by_id(recipe_params[:instruction_id])
+    return unless session[:user_id] == @instruction.recipe.user_id
     if @instruction.destroy!
       render json: { status: 200, message: "Instruction deleted!"}
     else
@@ -51,6 +53,7 @@ class RecipesController < ApplicationController
 
   def destroy_ingredient
     @ingredient = RecipeIngredient.find_by_id(recipe_params[:ingredient_id])
+    return unless session[:user_id] == @ingredient.recipe.user_id
       if @ingredient.destroy!
         render json: { status: 200, message: "Ingredient deleted!"}
       else
