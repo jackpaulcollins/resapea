@@ -1,14 +1,19 @@
 class RecipesController < ApplicationController
+  include VoteConcern
 
   def index
     @recipes = RecipeBlueprint.render(Recipe.all)
-
     render json: { data: @recipes }
   end
 
   def show
     @recipe = RecipeBlueprint.render(Recipe.find_by_id(params[:id]))
     render json: { status: 200, recipe: @recipe}
+  end
+
+  def query
+    @recipes = RecipeBlueprint.render(Recipe.where("lower(name) LIKE ? OR lower(genre) LIKE ?", "%" + recipe_params[:query_string].downcase + "%","%" + recipe_params[:query_string].downcase + "%"))
+    render json: { status: 200, data: @recipes}
   end
 
   def create
@@ -72,6 +77,7 @@ class RecipesController < ApplicationController
                     :user_id,
                     :instruction_id,
                     :ingredient_id,
+                    :query_string,
                     :recipe => {},
                     :instructions_attributes => [:id, :recipe_id, :content, :position, :_destroy],
                     :recipe_ingredients_attributes => [:id, :recipe_id, :measurement_unit_quantity, :measurement_unit_type, :ingredient_name, :_destroy],
