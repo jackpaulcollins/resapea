@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   def show
-    @comments = CommentBlueprint.render(Comment.where(recipe_id: params[:id]))
+    @comments = CommentBlueprint.render(Comment.where(recipe_id: params[:id]).order("total_points, created_at desc"))
     render json: { comments: @comments }
   end
 

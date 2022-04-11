@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_03_235413) do
+ActiveRecord::Schema.define(version: 2022_04_10_211459) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,7 +21,9 @@ ActiveRecord::Schema.define(version: 2022_04_03_235413) do
     t.bigint "recipe_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "total_points"
     t.index ["recipe_id"], name: "index_comments_on_recipe_id"
+    t.index ["total_points"], name: "index_comments_on_total_points"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
@@ -50,6 +52,8 @@ ActiveRecord::Schema.define(version: 2022_04_03_235413) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "total_points"
+    t.index ["total_points"], name: "index_recipes_on_total_points"
     t.index ["user_id"], name: "index_recipes_on_user_id"
   end
 

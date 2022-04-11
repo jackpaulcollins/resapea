@@ -2,7 +2,7 @@ class RecipesController < ApplicationController
   include VoteConcern
 
   def index
-    @recipes = RecipeBlueprint.render(Recipe.all)
+    @recipes = RecipeBlueprint.render(Recipe.all.order("total_points, created_at desc"))
     render json: { data: @recipes }
   end
 
@@ -12,7 +12,7 @@ class RecipesController < ApplicationController
   end
 
   def query
-    @recipes = RecipeBlueprint.render(Recipe.where("lower(name) LIKE ? OR lower(genre) LIKE ?", "%" + recipe_params[:query_string].downcase + "%","%" + recipe_params[:query_string].downcase + "%"))
+    @recipes = RecipeBlueprint.render(Recipe.where("lower(name) LIKE ? OR lower(genre) LIKE ?", "%#{recipe_params[:query_string].downcase}%","%" + recipe_params[:query_string].downcase + "%"))
     render json: { status: 200, data: @recipes}
   end
 
