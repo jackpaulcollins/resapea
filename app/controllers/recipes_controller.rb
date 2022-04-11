@@ -2,7 +2,7 @@ class RecipesController < ApplicationController
   include VoteConcern
 
   def index
-    @recipes = RecipeBlueprint.render(Recipe.all.order("total_points, created_at desc"))
+    @recipes = RecipeBlueprint.render(Recipe.all.order("total_points desc"))
     render json: { data: @recipes }
   end
 
