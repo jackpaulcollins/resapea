@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :ingredients
     resources :recipe_ingredients
     resources :votes, only: [:create, :destroy]
+    post "user", to: "users#show"
     post "fetch_votes/:id", to: "votes#show"
     delete :destroy_instruction, to: "recipes#destroy_instruction"
     delete :destroy_ingredient, to: "recipes#destroy_ingredient"

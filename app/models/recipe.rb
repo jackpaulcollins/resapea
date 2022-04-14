@@ -5,8 +5,4 @@ class Recipe < ApplicationRecord
   has_many :comments, dependent: :delete_all
   has_many :votes, :as => :voteable, dependent: :delete_all
   accepts_nested_attributes_for :recipe_ingredients, :instructions
-
-  def total_points
-    self.votes.pluck(:vote_type).sum || 0
-  end
 end

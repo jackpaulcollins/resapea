@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.3'
+ruby '3.0.0'
 
 gem 'bcrypt', '~> 3.1', '>= 3.1.16'
 gem 'rack-cors', :require => 'rack/cors'
@@ -10,10 +10,9 @@ gem 'mailgun-ruby', '~> 1.2', '>= 1.2.5'
 gem 'rails_same_site_cookie', '~> 0.1.9'
 gem 'blueprinter'
 gem 'oj'
-gem 'newrelic_rpm'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.6'
+gem "rails", "~> 7.0.2", ">= 7.0.2.3"
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server

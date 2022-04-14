@@ -5,16 +5,12 @@ class Vote < ApplicationRecord
   validates :voteable_type, inclusion: { in: [ "Recipe", "Comment"] }
   validates_presence_of :vote_type
   validates :vote_type, inclusion: { in: [ -1, 1 ] }
-  before_save :update_counter_cache_on_create
-  before_destroy :update_counter_cache_on_destroy
+  after_save :update_counter_cache
+  after_destroy :update_counter_cache
 
-  def update_counter_cache_on_create
-    self.voteable.total_points = self.voteable.total_points + self.vote_type
-    self.voteable.save
-  end
-
-  def update_counter_cache_on_destroy
-    self.voteable.total_points = self.voteable.total_points + (self.vote_type * -1)
-    self.voteable.save
+  def update_counter_cache
+    @resource = self.voteable
+    @resource.total_points = @resource.votes.pluck(:vote_type).sum || 0
+    @resource.save
   end
 end
