@@ -5,4 +5,5 @@ class Recipe < ApplicationRecord
   has_many :comments, dependent: :delete_all
   has_many :votes, :as => :voteable, dependent: :delete_all
   accepts_nested_attributes_for :recipe_ingredients, :instructions
+  has_one_attached :picture, dependent: :delete
 end

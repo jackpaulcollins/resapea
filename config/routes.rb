@@ -8,10 +8,14 @@ Rails.application.routes.draw do
     resources :ingredients
     resources :recipe_ingredients
     resources :votes, only: [:create, :destroy]
-    post "user", to: "users#show"
+    post "users", to: "users#show"
+    post "recipes/:id", to: "recipes#show"
+    put "users/:id", to: "users#update"
     post "fetch_votes/:id", to: "votes#show"
     delete :destroy_instruction, to: "recipes#destroy_instruction"
     delete :destroy_ingredient, to: "recipes#destroy_ingredient"
+    delete "recipes/photos/:id", to: "recipes#destroy_photo"
+    post :recipes_mailer, to: "recipes#email_recipe_to_user"
     post :recipes_query, to: "recipes#query"
     delete :logout, to: "sessions#logout"
     get :logged_in, to: "sessions#logged_in"

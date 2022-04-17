@@ -43,4 +43,8 @@ module CurrentUserConcern
       render json: { logged_in: false }
     end
   end
+
+  def user_requesting_own_resource(resource)
+    return @current_user.id == resource.id
+  end
 end

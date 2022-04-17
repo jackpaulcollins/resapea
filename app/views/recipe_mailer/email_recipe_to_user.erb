@@ -1,0 +1,19 @@
+<h1>Hi, <%= @user.username %></h1>
+<div>
+  <h4>Here is the <a href=<%="https://resapea.io/recipe/#{@recipe.id}"%>>recipe you requested!</a></h4>
+  <br>
+  <h2><%=@recipe.name%></h2>
+  <h5>Ingredients:</h5>
+  <% @recipe.recipe_ingredients.each do |r| %>
+    <div>
+      <%= r.measurement_unit_quantity%> <%= r.measurement_unit_type%> <%= r.ingredient_name%>
+    </div>
+  <%end%>
+  <h5>Instructions:</h5>
+    <% @recipe.instructions.each do |r| %>
+    <div>
+      <%= r.content%>
+    </div>
+  <%end%>
+  <p>  - Resapea Support. </p>
+</div>
