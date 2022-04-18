@@ -106,5 +106,3 @@ class RecipesController < ApplicationController
     )
   end
 end
-
-# pacMakaveli90@gmail.com
