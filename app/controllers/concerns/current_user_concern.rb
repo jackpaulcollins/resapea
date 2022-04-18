@@ -45,6 +45,7 @@ module CurrentUserConcern
   end
 
   def user_requesting_own_resource(resource)
+    return false unless @current_user
     return @current_user.id == resource.id
   end
 end
