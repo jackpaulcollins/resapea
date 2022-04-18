@@ -3,7 +3,7 @@
 # .NET, PHP, Python, Node, and Go applications with deep visibility and low
 # overhead.  For more information, visit www.newrelic.com.
 #
-# Generated April 10, 2022
+# Generated April 17, 2022
 #
 # This configuration file is custom generated for NewRelic Administration
 #
@@ -16,7 +16,7 @@ common: &default_settings
 
   # Your application name. Renaming here affects where data displays in New
   # Relic.  For more details, see https://docs.newrelic.com/docs/apm/new-relic-apm/maintenance/renaming-applications
-  app_name: resapea
+  app_name: resapea-prod
 
   distributed_tracing:
     enabled: true
@@ -50,7 +50,7 @@ common: &default_settings
 # If your application has other named environments, configure them here.
 development:
   <<: *default_settings
-  app_name: resapea (Development)
+  app_name: resapea-prod (Development)
 
 test:
   <<: *default_settings
@@ -59,7 +59,7 @@ test:
 
 staging:
   <<: *default_settings
-  app_name: resapea (Staging)
+  app_name: resapea-prod (Staging)
 
 production:
   <<: *default_settings
