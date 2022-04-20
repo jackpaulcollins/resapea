@@ -6,4 +6,6 @@ class Recipe < ApplicationRecord
   has_many :votes, :as => :voteable, dependent: :delete_all
   accepts_nested_attributes_for :recipe_ingredients, :instructions
   has_one_attached :picture, dependent: :delete
+  before_save { self.compatibilities.each { |c| c.downcase! }}
+  before_save { self.compatibilities.each { |c| c.to_s }}
 end

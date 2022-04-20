@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_16_020906) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_19_225752) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -81,6 +81,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_16_020906) do
     t.datetime "updated_at", precision: nil, null: false
     t.integer "total_points", default: 0
     t.string "photo_url"
+    t.string "cuisine"
+    t.text "compatibilities", default: [], array: true
     t.index ["total_points"], name: "index_recipes_on_total_points"
     t.index ["user_id"], name: "index_recipes_on_user_id"
   end
