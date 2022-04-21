@@ -3,8 +3,9 @@ class RecipesController < ApplicationController
   include RecipeConcern
 
   def index
-    @recipes = RecipeBlueprint.render(Recipe.all.order("total_points desc"))
-    render json: { data: @recipes }
+    @recipes = Recipe.paginate(page: recipe_params[:page]).order("total_points desc")
+    data = RecipeBlueprint.render(@recipes)
+    render json: { data: data, page: @recipes.current_page, pages: @recipes.total_pages }
   end
 
   def show
@@ -17,8 +18,14 @@ class RecipesController < ApplicationController
   end
 
   def query
-    @recipes = RecipeBlueprint.render(Recipe.where("lower(name) LIKE ? OR lower(genre) LIKE ?", "%#{recipe_params[:query_string].downcase}%","%" + recipe_params[:query_string].downcase + "%"))
-    render json: { status: 200, data: @recipes}
+    if recipe_params[:filter]
+      filter = recipe_params[:compatibilities].join("" + ",")
+      @recipes = RecipeBlueprint.render(Recipe.in_query(recipe_params[:query_string]).filter_by_compatibilities(filter))
+      render json: { status: 200, data: @recipes }
+    else
+      @recipes = RecipeBlueprint.render(Recipe.in_query(recipe_params[:query_string]))
+      render json: { status: 200, data: @recipes }
+    end
   end
 
   def create
@@ -101,6 +108,8 @@ class RecipesController < ApplicationController
                     :ingredient_id,
                     :query_string,
                     :picture,
+                    :filter,
+                    :page,
                     :recipe => {},
                     :compatibilities => [],
                     :instructions_attributes => [:id, :recipe_id, :content, :position, :_destroy],

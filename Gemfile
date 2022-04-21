@@ -11,6 +11,7 @@ gem 'rails_same_site_cookie', '~> 0.1.9'
 gem 'blueprinter'
 gem 'oj'
 gem 'newrelic_rpm'
+gem 'will_paginate'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "rails", "~> 7.0.2", ">= 7.0.2.3"

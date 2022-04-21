@@ -8,4 +8,12 @@ class Recipe < ApplicationRecord
   has_one_attached :picture, dependent: :delete
   before_save { self.compatibilities.each { |c| c.downcase! }}
   before_save { self.compatibilities.each { |c| c.to_s }}
+
+  scope :in_query, ->(query_string) { where("lower(name) LIKE ? OR lower(genre) LIKE ?", 
+                                            "%#{sanitize_sql_like(query_string.downcase)}%",
+                                            "%#{sanitize_sql_like(query_string.downcase)}%"
+                                            )}
+  scope :filter_by_compatibilities, ->(filters) { where("compatibilities @> ?", '{'"#{filters}"'}') }
+
+  self.per_page = 5
 end
