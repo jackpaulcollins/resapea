@@ -20,11 +20,13 @@ class RecipesController < ApplicationController
   def query
     if recipe_params[:filter]
       filter = recipe_params[:compatibilities].join("" + ",")
-      @recipes = RecipeBlueprint.render(Recipe.in_query(recipe_params[:query_string]).filter_by_compatibilities(filter))
-      render json: { status: 200, data: @recipes }
+      @recipes = Recipe.paginate(page: recipe_params[:page]).in_query(recipe_params[:query_string]).filter_by_compatibilities(filter).order("total_points desc")
+      data = RecipeBlueprint.render(@recipes)
+      render json: { status: 200, data: data, page: @recipes.current_page, pages: @recipes.total_pages }
     else
-      @recipes = RecipeBlueprint.render(Recipe.in_query(recipe_params[:query_string]))
-      render json: { status: 200, data: @recipes }
+      @recipes = Recipe.paginate(page: recipe_params[:page]).in_query(recipe_params[:query_string]).order("total_points desc")
+      data = RecipeBlueprint.render(@recipes)
+      render json: { status: 200, data: data, page: @recipes.current_page, pages: @recipes.total_pages }
     end
   end
 

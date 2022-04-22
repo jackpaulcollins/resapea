@@ -15,5 +15,5 @@ class Recipe < ApplicationRecord
                                             )}
   scope :filter_by_compatibilities, ->(filters) { where("compatibilities @> ?", '{'"#{filters}"'}') }
 
-  self.per_page = 5
+  self.per_page = 15
 end
