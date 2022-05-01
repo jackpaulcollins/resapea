@@ -12,6 +12,7 @@ gem 'blueprinter'
 gem 'oj'
 gem 'newrelic_rpm'
 gem 'will_paginate'
+gem 'aws-sdk-s3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "rails", "~> 7.0.2", ">= 7.0.2.3"
