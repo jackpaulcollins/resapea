@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   def show
-    @comments = CommentBlueprint.render(Comment.where(recipe_id: params[:id]).order("total_points desc"))
+    @comments = CommentBlueprint.render(Comment.where(recipe_id: params[:id], parent_id: nil).order("total_points desc"))
     render json: { comments: @comments }
   end
 
@@ -8,6 +8,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(
       user_id: session[:user_id], 
       recipe_id: comment_params[:recipe_id],
+      parent_id: comment_params[:parent_id],
       content: comment_params[:content]
     )
     if @comment.save
@@ -39,9 +40,18 @@ class CommentsController < ApplicationController
     end 
   end
 
+  def fetch_comment
+    @comment = CommentBlueprint.render(Comment.find_by_id(comment_params[:id]))
+    if @comment 
+      render json: { status: 200, comment: @comment }
+    else
+      render json: { status: 500, message: @comment.errors.full_messages }
+    end
+  end
+
   private
 
     def comment_params
-      params.require(:comment).permit(:content, :id, :recipe_id, :comment => {})
+      params.require(:comment).permit(:content, :id, :recipe_id, :parent_id, :comment => {})
     end
 end

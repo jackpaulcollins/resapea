@@ -30,6 +30,9 @@ Rails.application.routes.draw do
 
     #votes routes
     post "fetch_votes/:id", to: "votes#show"
+
+    #comment routes
+    post "fetch_comment", to: "comments#fetch_comment"
   end
 
   get '*path', to: "application#fallback_index_html", constraints: ->(request) do
