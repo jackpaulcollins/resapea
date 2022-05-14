@@ -90,10 +90,14 @@ class RecipesController < ApplicationController
   end
 
   def email_recipe_to_user
-    user = User.find_by_id(recipe_params[:user_id])
-    recipe = Recipe.includes(:recipe_ingredients, :instructions).find_by_id(recipe_params[:recipe_id])
-    RecipeMailer.email_recipe_to_user(recipe, user).deliver_now
-    render json: { status: 200, message: "email sent"}
+    if @current_user
+      user = User.find_by_id(recipe_params[:user_id])
+      recipe = Recipe.includes(:recipe_ingredients, :instructions).find_by_id(recipe_params[:recipe_id])
+      RecipeMailer.email_recipe_to_user(recipe, user).deliver_now
+      render json: { status: 200, message: "email sent"}
+    else 
+      render json: { status: 404, message: "You need to be logged in for this" }
+    end
   end
 
   private
