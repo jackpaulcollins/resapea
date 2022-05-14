@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class RecipeMailer < ActionMailer::Base
-  default from: "jack@respea.io"
+  default from: 'jack@respea.io'
   def email_recipe_to_user(recipe, user)
     @user = user
     @recipe = recipe

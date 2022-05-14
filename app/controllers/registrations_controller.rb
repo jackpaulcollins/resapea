@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RegistrationsController < ApplicationController
   def create
     @user = User.new(registration_params)
@@ -16,7 +18,7 @@ class RegistrationsController < ApplicationController
 
   private
 
-    def registration_params
-      params.require(:user).permit(:email, :username, :password, :password_confirmation, :user => {})
-    end
+  def registration_params
+    params.require(:user).permit(:email, :username, :password, :password_confirmation, user: {})
+  end
 end

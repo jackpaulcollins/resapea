@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-  :authentication => :plain,
-  :address => "smtp.mailgun.org",
-  :port => 587,
-  :domain => "mail.resapea.io",
-  user_name: Rails.application.credentials.mailgun[:username],
-  password: Rails.application.credentials.mailgun[:password]
-}
-  
+    authentication: :plain,
+    address: 'smtp.mailgun.org',
+    port: 587,
+    domain: 'mail.resapea.io',
+    user_name: Rails.application.credentials.mailgun[:username],
+    password: Rails.application.credentials.mailgun[:password]
+  }
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on

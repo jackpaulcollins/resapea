@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CurrentUserConcern
   extend ActiveSupport::Concern
 
@@ -10,7 +12,7 @@ module CurrentUserConcern
       @current_user ||= User.find_by(id: user_id)
     elsif (user_id = cookies.encrypted[:user_id])
       user ||= User.find_by(id: user_id)
-      if user && user.authenticated?(cookies[:remember_token])
+      if user&.authenticated?(cookies[:remember_token])
         log_in user
         @current_user = user
       end
@@ -46,6 +48,7 @@ module CurrentUserConcern
 
   def user_requesting_own_resource(resource)
     return false unless @current_user
-    return @current_user.id == resource.id
+
+    @current_user.id == resource.id
   end
 end

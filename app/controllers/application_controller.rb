@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   include CurrentUserConcern
 
@@ -9,6 +11,6 @@ class ApplicationController < ActionController::Base
   end
 
   def fallback_index_html
-    render :file => 'public/index.html'
+    render file: 'public/index.html'
   end
 end

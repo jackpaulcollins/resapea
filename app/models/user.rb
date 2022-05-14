@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   has_secure_password
   validates_presence_of :email
@@ -8,16 +10,18 @@ class User < ApplicationRecord
   has_many :comments
   before_save { self.email = email.downcase }
   validates :password, confirmation: true,
-                     length: {:within => 6..40},
-                     unless: Proc.new { |a| !a.new_record? && a.password.blank? }
-                     
+                       length: { within: 6..40 },
+                       unless: proc { |a| !a.new_record? && a.password.blank? }
 
   attr_accessor :remember_token
 
   def self.digest(string)
-    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
-                                                  BCrypt::Engine::cost
-    BCrypt::Password::create(string, cost: cost)
+    cost = if ActiveModel::SecurePassword.min_cost
+             BCrypt::Engine::MIN_COST
+           else
+             BCrypt::Engine.cost
+           end
+    BCrypt::Password.create(string, cost: cost)
   end
 
   def self.new_token
@@ -30,7 +34,7 @@ class User < ApplicationRecord
   end
 
   def clear_remember_digest
-    self.update_attribute(:remember_digest, nil)
+    update_attribute(:remember_digest, nil)
   end
 
   def authenticated?(remember_token)
@@ -41,21 +45,21 @@ class User < ApplicationRecord
     self.reset_password_token = generate_token
     self.reset_password_sent_at = Time.now.utc
     save!
-   end
-   
-   def password_token_valid?
-    (self.reset_password_sent_at + 4.hours) > Time.now.utc
-   end
-   
-   def reset_password!(password)
+  end
+
+  def password_token_valid?
+    (reset_password_sent_at + 4.hours) > Time.now.utc
+  end
+
+  def reset_password!(password)
     self.reset_password_token = nil
     self.password = password
     save!
-   end
-   
-   private
-   
-   def generate_token
+  end
+
+  private
+
+  def generate_token
     SecureRandom.hex(10)
-   end
+  end
 end

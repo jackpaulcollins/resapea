@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddTotalPointsToComments < ActiveRecord::Migration[5.2]
   def change
     add_column :comments, :total_points, :integer

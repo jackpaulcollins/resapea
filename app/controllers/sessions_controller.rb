@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 class SessionsController < ApplicationController
   include CurrentUserConcern
 
   def create
     user = User
-            .find_by(email: session_params[:email])
-            .try(:authenticate, session_params[:password])
+           .find_by(email: session_params[:email])
+           .try(:authenticate, session_params[:password])
 
     if user
       session[:user_id] = user.id
       session_params[:remember_me] ? remember(user) : forget(user)
-      
+
       render json: {
         status: :created,
         logged_in: true,
@@ -28,7 +30,7 @@ class SessionsController < ApplicationController
 
   private
 
-    def session_params
-      params.require(:user).permit(:email, :password, :remember_me, :user => {})
-    end
+  def session_params
+    params.require(:user).permit(:email, :password, :remember_me, user: {})
+  end
 end
